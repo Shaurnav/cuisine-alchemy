@@ -24,7 +24,7 @@ def create_sim():
     simulator = process_simulation_input(chef, custom)
     return jsonify({"status": "Simulation processed"}), 200
 
-end_iteration = 10
+end_iteration = 8
 last_message = ""
 @app.route('/api/sim-step', methods=['GET'])
 def sim_step():

@@ -5,6 +5,8 @@ import ChatBox from "@/components/chatbox";
 import { MessageProps } from "@/interfaces/message";
 import { useEffect, useState } from "react";
 import CountryCards from "@/components/icons/CountryCards";
+import Modal from "@/components/modal";
+import Button from "@/components/button";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,8 +20,8 @@ export default function Home() {
     countryTwo: string;
   }>();
   const [input, setInputText] = useState<string>("");
-  const [final, setFinal] = useState<boolean>();
-  const [numMessagesRendered, setNumMessagesRendered] = useState<number>(0);
+  const [finalData, setFinalData] = useState();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleSubmit = async () => {
     if (selectedCountries.length < 2) {
@@ -56,8 +58,7 @@ export default function Home() {
           }),
         });
         const data = await response.json();
-        console.log(data);
-        setSubmitted(true);
+          setSubmitted(true);
       } catch (error) {
         console.error("Error submitting data:", error);
       } finally {
@@ -87,7 +88,31 @@ export default function Home() {
         const data = await response.json();
         setTimeout(() => {
           setMessages((messages) => [...messages, data]);
-        }, 1000);
+        }, 1000); 
+
+        
+
+        if (data.is_last) {
+          console.log('in here');
+          const finalResponse = await fetch("http://127.0.0.1:5000/api/final", {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+              "Access-Control-Allow-Origin": "*",
+              "Access-Control-Allow-Headers":
+                "Origin, X-Requested-With, Content-Type, Accept, Authorization",
+              "Access-Control-Request-Method": "GET, POST, DELETE, PUT, OPTIONS",
+            },
+          });
+          
+          const finalDataFromResponse = await finalResponse.json();
+          console.table(finalDataFromResponse);
+          
+          setFinalData(finalDataFromResponse);
+          
+        }
+
       } catch (error) {
         console.error("Error fetching next message:", error);
       }
@@ -139,6 +164,51 @@ export default function Home() {
               <ChatBox chefMapping={chefMapping} messages={messages} />
             </div>
           )}
+          {finalData &&  
+            <Button
+              onClick={() => setIsModalOpen(!isModalOpen)}
+              colorClass="bg-secondary w-1/4 rounded-xl self-center"
+              title="Share!"
+              textColor="text-black"
+              marginClass="m-5"
+            ></Button>
+          }
+          {isModalOpen && 
+            <Modal>
+              <div className="bg-primary w-[30rem] h-[50rem] rounded-xl p-6 overflow-y-scroll">
+                <div className="flex flex-col mb-4 text-white">
+                  <img
+                    className="flex self-center rounded-2xl"
+                    src={finalData?.image}
+                    width={400}
+                    height={400}
+                  />
+                  <br/>
+                  <h1 className="text-2xl">
+                    Copy the following to share with your friends! 
+                  </h1>
+                  <p>
+                    {finalData?.summarized_message}
+                  </p>
+                  <br/>
+                  <h1 className="text-2xl">
+                    Here's the "recipe"
+                  </h1>
+                  <p>
+                    {finalData?.recipe}
+                  </p>
+                </div>
+                <div className="text-center">
+                  <button
+                    className="border border-white m-2 px-4 py-2 text-white rounded"
+                    onClick={() => setIsModalOpen(false)}
+                  >
+                    Done!
+                  </button>
+                </div>
+
+              </div>
+            </Modal>}          
         </div>
       </div>
     </main>
