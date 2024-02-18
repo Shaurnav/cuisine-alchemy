@@ -141,7 +141,7 @@ export default function Home() {
             setSelectedCountries={setSelectedCountries}
           />
           <input
-            className="m-4 h-10 w-1/2 text-xl self-center"
+            className="p-4 h-10 w-1/2 text-xl self-center border-solid border-2 rounded-lg border-gray-600"
             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
               setInputText(event.target.value)
             }
@@ -152,7 +152,7 @@ export default function Home() {
             }
           />
           <button
-            className="flex rounded-2xl flex-row text-white justify-center self-center bg-primary w-[100px] h-[25px]"
+            className="mt-4 flex rounded-2xl flex-row text-white justify-center self-center bg-primary w-[100px] h-[25px]"
             onClick={handleSubmit}
             disabled={isLoading}
           >
