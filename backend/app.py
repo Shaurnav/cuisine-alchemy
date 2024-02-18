@@ -18,23 +18,23 @@ def create_sim():
     global iteration
     iteration = 0
     data = request.json
-    chief = data.get('chefs', [])
+    chef = data.get('chefs', [])
     custom = data.get('custom', None)
     global simulator
-    simulator = process_simulation_input(chief, custom)
+    simulator = process_simulation_input(chef, custom)
     return jsonify({"status": "Simulation processed"}), 200
 
 end_iteration = 10
 last_message = ""
 @app.route('/api/sim-step', methods=['GET'])
 def sim_step():
-    # global iteration
-    # name, message = simulator.step()
-    # iteration += 1
-    # global last_message
-    # last_message = message
-    name = 'shreyas'
-    message = "hey what's up?"
+    global iteration
+    name, message = simulator.step()
+    iteration += 1
+    global last_message
+    last_message = message
+    # name = 'shreyas'
+    # message = "hey what's up?"
     return jsonify({"is_last": iteration >= end_iteration, "name": name, "text": message}), 200
 
 @app.route('/api/final', methods=['GET'])
@@ -42,12 +42,12 @@ def final():
     summarized_message = summarize_message(last_message)
     image = client.images.generate(
         model="dall-e-3",
-        prompt=f'A food picture described by: {summarized_message}',
-        size="512x512",
+        prompt=f'A realistic food picture described by: {summarized_message}',
+        size="1024x1024",
         quality="standard",
         n=1,
     )
-    return jsonify({"summarized_message": summarized_message, "image": image}), 200
+    return jsonify({"summarized_message": summarized_message, "image": image.data[0].url}), 200
 
 @app.route('/', methods=['GET'])
 def index():
