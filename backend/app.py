@@ -18,7 +18,7 @@ def create_sim():
     global iteration
     iteration = 0
     data = request.json
-    chief = data.get('chief', [])
+    chief = data.get('chefs', [])
     custom = data.get('custom', None)
     global simulator
     simulator = process_simulation_input(chief, custom)
@@ -28,11 +28,13 @@ end_iteration = 10
 last_message = ""
 @app.route('/api/sim-step', methods=['GET'])
 def sim_step():
-    global iteration
-    name, message = simulator.step()
-    iteration += 1
-    global last_message
-    last_message = message
+    # global iteration
+    # name, message = simulator.step()
+    # iteration += 1
+    # global last_message
+    # last_message = message
+    name = 'shreyas'
+    message = "hey what's up?"
     return jsonify({"is_last": iteration >= end_iteration, "name": name, "text": message}), 200
 
 @app.route('/api/final', methods=['GET'])

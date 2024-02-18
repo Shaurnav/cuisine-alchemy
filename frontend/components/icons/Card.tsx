@@ -4,7 +4,7 @@ export interface CardProps {
   countryName: string;
   imageSrc: string;
   setSelectedHook: any;
-  selectedCountries: [];
+  selectedCountries: any[];
 }
 
 function Card({
@@ -73,6 +73,7 @@ function Card({
           style={imageStyle}
           className="flex"
         />
+        {/* @ts-ignore */}
         <h3 style={titleStyle}>{countryName}</h3>
       </div>
     </div>

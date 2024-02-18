@@ -2,8 +2,7 @@ import React from "react";
 import { useState } from "react";
 import Card from "./Card";
 
-function CountryCards() {
-  const [selectedCountries, setSelectedCountries] = useState([]);
+function CountryCards({selectedCountries, setSelectedCountries}: any) {
 
   const countries = [
     { name: "CHINA", imageSrc: "./china.webp" },

@@ -8,8 +8,8 @@ import CountryCards from "@/components/icons/CountryCards";
 
 const inter = Inter({ subsets: ["latin"] });
 
-
 export default function Home() {
+  const [selectedCountries, setSelectedCountries] = useState([]);
   const [messages, setMessages] = useState<MessageProps[]>([]);
   const [numMessagesRendered, setNumMessagesRendered] = useState<number>(0);
 
@@ -33,6 +33,23 @@ export default function Home() {
     //maybe a num processed...
   }, [messages]);
 
+  const handleSubmit = async () => {
+    try {
+      const response = await fetch('http://127.0.0.1:5000/api/create-sim', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json', 
+        },
+        //@ts-ignore
+        body: JSON.stringify({ chefs: selectedCountries.map((item) => item.name) })
+      });
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error('Error submitting data:', error);
+    }
+  };
+
   return (
     <main
       className={`flex min-h-screen flex-col items-center justify-between p-4 ${inter.className}`}
@@ -40,7 +57,13 @@ export default function Home() {
       <div className="flex flex-col w-full">
         <Navbar />
         <div className="flex flex-col container mx-auto mt-3 pt-4">
-          <CountryCards />
+          <CountryCards selectedCountries={selectedCountries} setSelectedCountries={setSelectedCountries}/>
+          <button 
+            className="flex rounded-2xl flex-row text-white justify-center self-center bg-primary w-[100px] h-[25px]" 
+            onClick={handleSubmit}
+          >
+            Submit
+          </button>
           <h1 className="text-2xl font-bold mb-1">Chat</h1>
           <ChatBox messages={messages} />
         </div>
