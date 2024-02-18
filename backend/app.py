@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from dotenv import load_dotenv
 from simulation import DialogueSimulator, DialogueAgent
-from utils import process_simulation_input, summarize_message
+from utils import process_simulation_input, summarize_message, get_recipe
 from openai import OpenAI
 
 load_dotenv()
@@ -40,6 +40,7 @@ def sim_step():
 @app.route('/api/final', methods=['GET'])
 def final():
     summarized_message = summarize_message(last_message)
+    recipe = get_recipe(summarized_message)
     image = client.images.generate(
         model="dall-e-3",
         prompt=f'A realistic food picture described by: {summarized_message}',
@@ -47,7 +48,7 @@ def final():
         quality="standard",
         n=1,
     )
-    return jsonify({"summarized_message": summarized_message, "image": image.data[0].url}), 200
+    return jsonify({"summarized_message": summarized_message, "image": image.data[0].url, "recipe":recipe}), 200
 
 @app.route('/', methods=['GET'])
 def index():

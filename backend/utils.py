@@ -46,7 +46,20 @@ def generate_agent_description(name: str, custom: str, conversation_description:
 
 
 def generate_system_message(name: str, description: str, conversation_description: str):
-    return f"{conversation_description}\n\nYour name is {name}.\n\nYour description is as follows: {description}\n\n[Instructions for combining cultures]"
+    return f"""{conversation_description}\n\nYour name is {name}.\n\nYour description is as follows: {description}\n\nYour goal is to come up with a recipe that combines both of your cultures. Remember that it's only you and the other chef, do not mention the moderator.
+
+    DO push back on the other person if the new recipe does not have a balance of cultures.
+    DO focus on being creative.
+    DO take risks and aim to be quirky.
+    DO use elements from your own culture as you're reasoning about the recipe.
+    DO come up with a name for the dish when you're done.
+
+    DO NOT fabricate any dishes.
+
+    Do not add anything else.
+
+    Stop speaking the moment you finish speaking from your perspective.
+    """
 
 
 def specify_topic(topic: str, names: set):
@@ -70,9 +83,31 @@ def initialize_agents(agent_system_messages: dict):
 def select_next_speaker(step: int, agents: list[DialogueAgent]) -> int:
     return step % len(agents)
 
+def get_recipe(message: str):
+    system_message = SystemMessage(
+        content="""
+        Your goal is to generate the final combined recipe is.
+
+        Do give a recipe of the dish.
+        Do take into account both cultures.
+        Do make sure the dish is balanced.
+
+
+        Do not add anything else.
+        Do not sound like part of a conversation.
+
+        Stop when you are done with the recipe.
+        """)
+    recipe = ChatOpenAI(temperature=1.0)(
+        [system_message, HumanMessage(content=message)]).content
+    return recipe
+
+
 def summarize_message(message: str):
     system_message = SystemMessage(
-        content="Tell me how the new recipie looks like now.")
+        content="""
+        For the following text, create an 80 word post. Use a fun but not too overstated tone for a social media / blog post. Use emojis. Start the tweet with a sentence about the two countries meeting each other for a brand-new fusion dish where the 2 countries are determined from the text. Give a succinct name to the dish that incorporates the main 2-3 ingredients and then describe it properly. Write the post from the perspective of a user who used our site to generate this dish idea and wants to share it with their friends because they think it's cool. No hashtags. End the tweet: \"Create your own creative combinations at foodagent.com\"
+        """)
     summerized_message = ChatOpenAI(temperature=1.0)(
         [system_message, HumanMessage(content=message)]).content
     return summerized_message
