@@ -15,12 +15,12 @@ const config: Config = {
       },
     },
     colors: {
-      'text': '#252202',
-      'background': '#fefef4',
-      'primary': '#d8db46',
-      'secondary': '#589118',
-      'accent': '#4ef690',
-     },     
+      'text': '#160e03',
+      'background': '#fdf8f0',
+      'primary': '#616F39',
+      'secondary': '#FFD98E',
+      'accent': '#FFB677',
+     },
   },
   plugins: [],
 };
