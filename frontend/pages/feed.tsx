@@ -6,7 +6,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function Feed() {
   return (
-    <div>
+    <div className="p-4">
       <Navbar />
       <AllFeed />
     </div>

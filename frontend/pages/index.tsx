@@ -12,11 +12,12 @@ export default function Home() {
   const [selectedCountries, setSelectedCountries] = useState<any[]>([]);
   const [messages, setMessages] = useState<MessageProps[]>([]);
   const [submitted, setSubmitted] = useState<boolean>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [chefMapping, setChefMapping] = useState<{
     countryOne: string;
     countryTwo: string;
   }>();
-  const [input, setInputText] = useState<string>('');
+  const [input, setInputText] = useState<string>("");
   const [final, setFinal] = useState<boolean>();
   const [numMessagesRendered, setNumMessagesRendered] = useState<number>(0);
 
@@ -26,41 +27,43 @@ export default function Home() {
       return;
     }
 
-    try {
-      console.log(input);
-      
-      const countryOne: string = selectedCountries[0].name;
-      const countryTwo: string = selectedCountries[1].name;
+    setIsLoading(true);
+    setTimeout(async () => {
+      try {
+        const countryOne: string = selectedCountries[0].name;
+        const countryTwo: string = selectedCountries[1].name;
 
-      const CHEF_MAPPING = {
-        countryOne: countryOne,
-        countryTwo: countryTwo,
-      };
+        const CHEF_MAPPING = {
+          countryOne: countryOne,
+          countryTwo: countryTwo,
+        };
 
-      setChefMapping(CHEF_MAPPING);
+        setChefMapping(CHEF_MAPPING);
 
-      const response = await fetch("http://127.0.0.1:5000/api/create-sim", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Headers":
-            "Origin, X-Requested-With, Content-Type, Accept, Authorization",
-          "Access-Control-Request-Method": "GET, POST, DELETE, PUT, OPTIONS",
-        },
-        //@ts-ignore
-        body: JSON.stringify({
-          chefs: selectedCountries.map((item) => item.name),
-          custom: input, 
-        }),
-      });
-      setSubmitted(true);
-      const data = await response.json();
-      console.log(data);
-    } catch (error) {
-      console.error("Error submitting data:", error);
-    }
+        const response = await fetch("http://127.0.0.1:5000/api/create-sim", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Headers":
+              "Origin, X-Requested-With, Content-Type, Accept, Authorization",
+            "Access-Control-Request-Method": "GET, POST, DELETE, PUT, OPTIONS",
+          },
+          body: JSON.stringify({
+            chefs: selectedCountries.map((item) => item.name),
+            custom: input,
+          }),
+        });
+        const data = await response.json();
+        console.log(data);
+        setSubmitted(true);
+      } catch (error) {
+        console.error("Error submitting data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    }, 2000);
   };
 
   useEffect(() => {
@@ -84,9 +87,7 @@ export default function Home() {
         const data = await response.json();
         setTimeout(() => {
           setMessages((messages) => [...messages, data]);
-        }, 1000); 
-
-        setFinal(data.is_last);
+        }, 1000);
       } catch (error) {
         console.error("Error fetching next message:", error);
       }
@@ -99,7 +100,9 @@ export default function Home() {
     //maybe a num processed...
   }, [messages, submitted]);
 
-  const hasCountry = selectedCountries.some((item) => item.name === "ADD YOUR OWN");
+  const hasCountry = selectedCountries.some(
+    (item) => item.name === "ADD YOUR OWN"
+  );
 
   return (
     <main
@@ -114,7 +117,9 @@ export default function Home() {
           />
           <input
             className="m-4 h-10 w-1/2 text-xl self-center"
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => setInputText(event.target.value)}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+              setInputText(event.target.value)
+            }
             placeholder={
               hasCountry
                 ? "Please describe your custom chef"
@@ -124,8 +129,9 @@ export default function Home() {
           <button
             className="flex rounded-2xl flex-row text-white justify-center self-center bg-primary w-[100px] h-[25px]"
             onClick={handleSubmit}
+            disabled={isLoading}
           >
-            Submit
+            {isLoading ? "Loading..." : "Submit"}
           </button>
           {submitted && (
             <div>

@@ -21,9 +21,20 @@ export default function FeedIcon({
         flexDirection: "column",
         alignItems: "center",
         borderRadius: "10px",
+        backgroundColor: "#fdba74",
       }}
     >
-      <h2>{title}</h2>
+      <h2
+        style={{
+          fontWeight: "bold",
+          fontSize: "20px",
+          paddingTop: "20px",
+          paddingBottom: "20px",
+        }}
+      >
+        {title}
+      </h2>
+
       <img
         src={imageUrl}
         alt={title}

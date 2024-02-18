@@ -6,22 +6,8 @@ export default function AllFeed() {
       username: "joy_ghosh15",
       title: "Falafel Burger with Tahini Bbq Sauce and Avocado",
       description:
-        "Falafel Burger with Tahini BBQ Sauce and Avocado Slaw, showcasing the fusion of Middle Eastern and American cuisines",
+        "Falafel Burger with Tahini BBQ Sauce and Avocado Slaw, showcasing the fusion of Middle Eastern and American cuisines.",
       imageUrl: "./falafel.webp",
-    },
-    {
-      username: "adibsood",
-      title: "Borscht-inspired Shakshukha",
-      description:
-        "A unique fusion dish combining Russian borscht with Arabic shakshuka. Beet-infused tomato sauce simmered with bell peppers, onions, and spices, topped with poached eggs. Served with a dollop of labneh and a sprinkle of fresh dill",
-      imageUrl: "./borscht.webp",
-    },
-    {
-      username: "sharmaTheParma",
-      title: "Churro Eclair with White Chocolate Ganache",
-      description:
-        "An innovative fusion dessert that marries the delicate elegance of French éclairs with the vibrant flavors of Mexican churros. Crispy choux pastry filled with a decadent spiced white chocolate ganache, infused with cinnamon, nutmeg, and a hint of cayenne pepper.",
-      imageUrl: "churro.webp",
     },
     {
       username: "Xiao215",
@@ -31,18 +17,25 @@ export default function AllFeed() {
       imageUrl: "matcha.webp",
     },
     {
-      username: "nBanga",
+      username: "natashaBanga",
       title: "Moroccan Paella with Harissa Aioli",
       description:
-        "A fusion dish merging Spanish paella with Moroccan flavors. Saffron-infused rice cooked with North African spices, mixed seafood, and chorizo",
+        "A fusion dish merging Spanish paella with Moroccan flavors. Saffron-infused rice cooked with North African spices, mixed seafood, and chorizo.",
       imageUrl: "moroccan.webp",
     },
     {
-      username: "wallace_browning",
-      title: "Matcha Tres Leches Cake with Dragon Fruit Compote",
+      username: "adibsood",
+      title: "Borscht-inspired Shakshukha",
       description:
-        "A decadent blend of Mexican tres leches cake infused with Japanese matcha powder.",
-      imageUrl: "matccha.webp",
+        "A fusion dish of Russian borscht and Arabic shakshuka featuring a beet-infused tomato sauce with bell peppers, onions, and spices, topped with poached eggs and fresh dill.",
+      imageUrl: "./borscht.webp",
+    },
+    {
+      username: "sharmaTheParma",
+      title: "Churro Eclair with White Chocolate Ganache",
+      description:
+        "An innovative dessert blending French éclairs and Mexican churros into a crispy pastry filled with chocolate ganache, flavored with cinnamon and a hint of cayenne pepper.",
+      imageUrl: "churro.webp",
     },
     {
       username: "shrishJ",
@@ -52,18 +45,25 @@ export default function AllFeed() {
       imageUrl: "Thai-Med.webp",
     },
     {
-      username: "srinidhii.v",
-      title: "Masala Dosa Calzone",
+      username: "wallace_browning",
+      title: "Matcha Tres Leches with Dragon Fruit Compote",
       description:
-        "A creative fusion dish blending the iconic South Indian dosa with the comforting flavors of Italian calzone",
-      imageUrl: "masala.webp",
+        "A decadent blend of Mexican tres leches cake infused with Japanese matcha powder.",
+      imageUrl: "matccha.webp",
     },
     {
       username: "aliyanChaCha",
       title: "Sushi Samosa",
       description:
-        "Combining the elegance of Japanese sushi with the beloved Indian samosa",
+        "Combining the elegance of Japanese sushi with the beloved Indian samosa.",
       imageUrl: "sushi.webp",
+    },
+    {
+      username: "srinidhii.v",
+      title: "Masala Dosa Calzone",
+      description:
+        "A creative fusion dish blending the iconic South Indian dosa with the comforting flavors of Italian calzone.",
+      imageUrl: "masala.webp",
     },
   ];
 
@@ -82,9 +82,9 @@ export default function AllFeed() {
   };
 
   return (
-    <div style={containerStyle}>
+    <div className="grid grid-cols-3 flex">
       {feedData.map((item, index) => (
-        <div style={cardStyle} key={index}>
+        <div key={index}>
           <FeedIcon
             username={item.username}
             title={item.title}
