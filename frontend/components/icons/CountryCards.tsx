@@ -1,15 +1,18 @@
 import React from "react";
-import Card from "./Card"; // Make sure the path is correct
+import { useState } from "react";
+import Card from "./Card";
 
 function CountryCards() {
+  const [selectedCountries, setSelectedCountries] = useState([]);
+
   const countries = [
     { name: "China", imageSrc: "./china.png" },
     { name: "Mexican", imageSrc: "./mexican.png" },
     { name: "France", imageSrc: "./france.png" },
     { name: "India", imageSrc: "./india.png" },
     { name: "Japan", imageSrc: "./japan.png" },
-    { name: "Thai", imageSrc: "./thai.png" },
-    { name: "Korean", imageSrc: "./korean.png" },
+    { name: "Lebanon", imageSrc: "./lebanon.png" },
+    { name: "USA", imageSrc: "./usa.png" },
     { name: "AddNew", imageSrc: "./addnew.png" },
   ];
 
@@ -17,7 +20,6 @@ function CountryCards() {
     display: "flex",
     flexDirection: "row", // Correctly typed as a FlexDirection value
     overflowX: "scroll", // Correctly typed as a string, but specifically allowed for overflowX
-    padding: "20px",
     gap: "10px", // Ensures space between items
   };
 
@@ -28,6 +30,8 @@ function CountryCards() {
           key={index}
           countryName={country.name}
           imageSrc={country.imageSrc}
+          setSelectedHook={setSelectedCountries}
+          selectedCountries={selectedCountries}
         />
       ))}
     </div>

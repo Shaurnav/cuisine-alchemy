@@ -1,6 +1,18 @@
 import React, { useState } from "react";
 
-function Card({ countryName, imageSrc }) {
+export interface CardProps {
+  countryName: string;
+  imageSrc: string;
+  setSelectedHook: any;
+  selectedCountries: [];
+}
+
+function Card({
+  countryName,
+  imageSrc,
+  setSelectedHook,
+  selectedCountries,
+}: CardProps) {
   const [isSelected, setIsSelected] = useState(false);
 
   const cardStyle = {
@@ -34,9 +46,27 @@ function Card({ countryName, imageSrc }) {
     fontWeight: "bold", // bold font weight for emphasis
   };
 
+  const gotSelected = () => {
+    if (isSelected) {
+      setIsSelected(false);
+      const filteredCountries = selectedCountries.filter(
+        (country: any) => country.name !== countryName
+      );
+      console.log(filteredCountries);
+      setSelectedHook(filteredCountries);
+    } else if (selectedCountries.length < 2) {
+      setIsSelected(true);
+      setSelectedHook([
+        ...selectedCountries,
+        { name: countryName, imageSrc: imageSrc },
+      ]);
+      console.log(selectedCountries);
+    }
+  };
+
   return (
     <div>
-      <div style={cardStyle} onClick={() => setIsSelected(!isSelected)}>
+      <div style={cardStyle} onClick={gotSelected}>
         <img src={imageSrc} alt={countryName} style={imageStyle} />
         <h3>{countryName}</h3>
       </div>
