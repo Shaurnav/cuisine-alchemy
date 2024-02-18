@@ -3,8 +3,8 @@ from langchain.schema import SystemMessage, HumanMessage
 from simulation import DialogueAgent, DialogueSimulator
 
 
-def process_simulation_input(chief: list[str], custom: str):
-    topic, names = determine_topic_and_names(chief, custom)
+def process_simulation_input(chef: list[str], custom: str):
+    topic, names = determine_topic_and_names(chef, custom)
     conversation_description = generate_conversation_description(topic, names)
     agent_descriptions = {name: generate_agent_description(
         name, custom, conversation_description) for name in names}
@@ -18,15 +18,15 @@ def process_simulation_input(chief: list[str], custom: str):
     return simulator
 
 
-def determine_topic_and_names(chief: list[str], custom: str):
-    if custom and len(chief) == 1:
-        names = {"Custom Chef", f"{chief[0]} Chef"}
-        topic = f"Finding a novel dish idea that combines both the CUSTOM culture and {chief[0]} culture"
-    elif not custom and len(chief) == 2:
-        names = {f"{chief[0]} Chef", f"{chief[1]} Chef"}
-        topic = f"Finding a novel dish idea that combines both the {chief[0]} culture and {chief[1]} culture"
+def determine_topic_and_names(chef: list[str], custom: str):
+    if custom and len(chef) == 1:
+        names = {"Custom Chef", f"{chef[0]} Chef"}
+        topic = f"Finding a novel dish idea that combines both the CUSTOM culture and {chef[0]} culture"
+    elif not custom and len(chef) == 2:
+        names = {f"{chef[0]} Chef", f"{chef[1]} Chef"}
+        topic = f"Finding a novel dish idea that combines both the {chef[0]} culture and {chef[1]} culture"
     else:
-        raise ValueError("Invalid input for 'chief' and 'custom'")
+        raise ValueError("Invalid input for 'chef' and 'custom'")
     return topic, names
 
 
@@ -69,3 +69,10 @@ def initialize_agents(agent_system_messages: dict):
 
 def select_next_speaker(step: int, agents: list[DialogueAgent]) -> int:
     return step % len(agents)
+
+def summarize_message(message: str):
+    system_message = SystemMessage(
+        content="Tell me how the new recipie looks like now.")
+    summerized_message = ChatOpenAI(temperature=1.0)(
+        [system_message, HumanMessage(content=message)]).content
+    return summerized_message
