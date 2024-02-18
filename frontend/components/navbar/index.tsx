@@ -12,6 +12,9 @@ export default function Navbar() {
             <h1 className="text-xl p-2 m-2">Home</h1>
           </Link>
           <Link href="/feed">
+            <h1 className="text-xl p-2 m-2">Feed</h1>
+          </Link>
+          <Link href="/saved">
             <h1 className="text-xl p-2 m-2">Saved</h1>
           </Link>
         </div>
