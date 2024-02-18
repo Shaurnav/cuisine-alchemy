@@ -19,7 +19,8 @@ export default function AllFeed() {
     {
       username: "sharmaTheParma",
       title: "Churro Eclair with White Chocolate Ganache",
-      description: "This is a sample description for the first feed item.",
+      description:
+        "An innovative fusion dessert that marries the delicate elegance of French éclairs with the vibrant flavors of Mexican churros. Crispy choux pastry filled with a decadent spiced white chocolate ganache, infused with cinnamon, nutmeg, and a hint of cayenne pepper.",
       imageUrl: "churro.webp",
     },
     {
@@ -32,7 +33,8 @@ export default function AllFeed() {
     {
       username: "nBanga",
       title: "Moroccan Paella with Harissa Aioli",
-      description: "This is a sample description for the first feed item.",
+      description:
+        "A fusion dish merging Spanish paella with Moroccan flavors. Saffron-infused rice cooked with North African spices, mixed seafood, and chorizo",
       imageUrl: "moroccan.webp",
     },
     {
