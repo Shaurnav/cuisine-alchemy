@@ -47,7 +47,7 @@ def generate_agent_description(name: str, custom: str, conversation_description:
 
 
 def generate_system_message(name: str, description: str, conversation_description: str):
-    return f"""{conversation_description}\n\nYour name is {name}.\n\nYour description is as follows: {description}\n\nYour goal is to come up with a recipe that combines both of your cultures. Remember that it's only you and the other chef, do not mention the moderator.
+    return f"""{conversation_description}\n\nYour name is {name}.\n\nYour description is as follows: {description}\n\nYour goal is to come up with a recipe that combines both of your cultures. Remember that it's only you and the other chef.
 
     DO push back on the other person if the new recipe does not have a balance of cultures.
     DO focus on being creative.
@@ -61,7 +61,7 @@ def generate_system_message(name: str, description: str, conversation_descriptio
     DO make well-reasoned arguments and hypothesis of what different ingredient combinations from different cultures would taste like when used together
 
     DO NOT be overly verbose: use cooking-specific terminology, but keep the tone casual and succinct.
-    
+    DO NOT mention the moderator in any capacity in your response.
     DO NOT fabricate any dishes.
     Do NOT add anything else.
     Stop speaking the moment you finish speaking from your perspective.
