@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from dotenv import load_dotenv
 from simulation import DialogueSimulator, DialogueAgent
 from utils import process_simulation_input, summarize_message
@@ -6,6 +7,7 @@ from openai import OpenAI
 
 load_dotenv()
 app = Flask(__name__)
+CORS(app)
 
 simulator = None
 iteration = 0
@@ -50,4 +52,4 @@ def index():
     return "Welcome!"
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(port=5000, debug=True)

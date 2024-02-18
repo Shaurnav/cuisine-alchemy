@@ -3,18 +3,10 @@ import { Inter } from "next/font/google";
 import Navbar from "@/components/navbar";
 import ChatBox from "@/components/chatbox";
 import { MessageProps } from "@/interfaces/message";
-import CountryCards from "@/components/icons/CountryCards";
 import { useEffect, useState } from "react";
+import CountryCards from "@/components/icons/CountryCards";
 
 const inter = Inter({ subsets: ["latin"] });
-
-const messages: MessageProps[] = [
-  { text: "Hi, how can I help you?", name: "bot" },
-  { text: "I'm looking for some information.", name: "user" },
-  { text: "Sure, what do you need to know?", name: "bot" },
-  // Add more messages as needed
-];
-
 
 
 export default function Home() {
@@ -24,11 +16,11 @@ export default function Home() {
   useEffect(() => {
     const fetchNextMessage = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:5000/api/sim-step');
+        const response = await fetch('http://127.0.0.1:5000/api/sim-step', { method: 'get', mode: 'cors' });
         const data = await response.json();
         setTimeout(() => {
-          setMessages(prevMessages => [...prevMessages, data]);
-        }, 1000); // Adjust the timeout as needed for typing effect speed
+          setMessages(messages => [...messages, data]);
+        }, 5000); // Adjust the timeout as needed for typing effect speed
       } catch (error) {
         console.error('Error fetching next message:', error);
       }
