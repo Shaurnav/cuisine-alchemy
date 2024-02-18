@@ -11,10 +11,15 @@ const inter = Inter({ subsets: ["latin"] });
 export default function Home() {
   const [selectedCountries, setSelectedCountries] = useState([]);
   const [messages, setMessages] = useState<MessageProps[]>([]);
+  const [submitted, setSubmitted] = useState<boolean>();
   const [numMessagesRendered, setNumMessagesRendered] = useState<number>(0);
 
   useEffect(() => {
     const fetchNextMessage = async () => {
+      if (!submitted) {
+        return;
+      }
+
       try {
         const response = await fetch('http://127.0.0.1:5000/api/sim-step', { method: 'get', mode: 'cors' });
         const data = await response.json();
@@ -34,15 +39,25 @@ export default function Home() {
   }, [messages]);
 
   const handleSubmit = async () => {
+    if (selectedCountries.length < 2) {
+      window.alert('Please select at least two chefs!');
+      return;
+    }
+
     try {
       const response = await fetch('http://127.0.0.1:5000/api/create-sim', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json', 
+          'Accept': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
+          'Access-Control-Request-Method': 'GET, POST, DELETE, PUT, OPTIONS',          
         },
         //@ts-ignore
         body: JSON.stringify({ chefs: selectedCountries.map((item) => item.name) })
       });
+      setSubmitted(true);
       const data = await response.json();
       console.log(data);
     } catch (error) {
@@ -64,8 +79,12 @@ export default function Home() {
           >
             Submit
           </button>
-          <h1 className="text-2xl font-bold mb-1">Chat</h1>
-          <ChatBox messages={messages} />
+          {submitted && (
+            <div>
+              <h1 className="text-2xl font-bold mb-1">Chat</h1>
+              <ChatBox messages={messages}/>
+            </div>
+          )}
         </div>
       </div>
     </main>
