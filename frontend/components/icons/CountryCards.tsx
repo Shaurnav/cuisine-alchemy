@@ -12,7 +12,7 @@ function CountryCards({selectedCountries, setSelectedCountries}: any) {
     { name: "JAPAN", imageSrc: "./japan.webp" },
     { name: "LEBANON", imageSrc: "./lebanon.webp" },
     { name: "USA", imageSrc: "./usa.webp" },
-    { name: "ADD NEW", imageSrc: "./addnew.webp" },
+    { name: "ADD YOUR OWN", imageSrc: "./question mark user character.webp" },
   ];
 
   const galleryStyle: React.CSSProperties = {

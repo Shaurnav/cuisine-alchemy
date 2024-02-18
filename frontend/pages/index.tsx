@@ -42,7 +42,7 @@ export default function Home() {
           'Access-Control-Request-Method': 'GET, POST, DELETE, PUT, OPTIONS',          
         },
         //@ts-ignore
-        body: JSON.stringify({ chefs: selectedCountries.map((item) => item.name) })
+        body: JSON.stringify({ chefs: selectedCountries.map((item) => item.name)})
       });
       setSubmitted(true);
       const data = await response.json();
