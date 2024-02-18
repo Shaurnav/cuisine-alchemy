@@ -1,13 +1,30 @@
-import requests
 from flask import Flask, request, jsonify
-from pprint import pprint
+from dotenv import load_dotenv
+from simulation import DialogueSimulator, DialogueAgent
+from utils import process_simulation_input
 
+load_dotenv()
 app = Flask(__name__)
 
-# all this does is simulate the next action.
-@app.route('/simulate_next', methods=['GET'])
-def fetch_emails():
-  return jsonify({'hello': 'world'}), 200
+simulator = None
+
+@app.route('/api/create-sim', methods=['POST'])
+def create_sim():
+    data = request.json
+    chief = data.get('chief', [])
+    custom = data.get('custom', None)
+    global simulator
+    simulator = process_simulation_input(chief, custom)
+    return jsonify({"status": "Simulation processed"}), 200
+
+@app.route('/api/sim-step', methods=['GET'])
+def sim_step():
+    name, message = simulator.step()
+    return jsonify({"name": name, "message": message}), 200
+
+@app.route('/', methods=['GET'])
+def index():
+    return "Welcome!"
 
 if __name__ == '__main__':
-  app.run(port=5000, debug=True)
+    app.run(debug=True)
