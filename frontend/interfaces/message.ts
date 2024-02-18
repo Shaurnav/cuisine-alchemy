@@ -1,4 +1,5 @@
 export interface MessageProps {
   text: string;
-  name: 'user' | 'bot'; // Assuming only two sides, user and bot
+  name: 'chefone' | 'cheftwo' | string; // Assuming only two sides, user and bot
+  chefMapping: { countryOne: string; countryTwo: string; } | undefined;
 }

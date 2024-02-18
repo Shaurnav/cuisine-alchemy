@@ -20,10 +20,10 @@ def process_simulation_input(chef: list[str], custom: str):
 
 def determine_topic_and_names(chef: list[str], custom: str):
     if custom and len(chef) == 1:
-        names = {"Custom Chef", f"{chef[0]} Chef"}
+        names = {"Custom", f"{chef[0]}"}
         topic = f"Finding a novel dish idea that combines both the CUSTOM culture and {chef[0]} culture"
     elif not custom and len(chef) == 2:
-        names = {f"{chef[0]} Chef", f"{chef[1]} Chef"}
+        names = {f"{chef[0]}", f"{chef[1]}"}
         topic = f"Finding a novel dish idea that combines both the {chef[0]} culture and {chef[1]} culture"
     else:
         raise ValueError("Invalid input for 'chef' and 'custom'")

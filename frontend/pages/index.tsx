@@ -9,10 +9,48 @@ import CountryCards from "@/components/icons/CountryCards";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  const [selectedCountries, setSelectedCountries] = useState([]);
+  const [selectedCountries, setSelectedCountries] = useState<any[]>([]);
   const [messages, setMessages] = useState<MessageProps[]>([]);
   const [submitted, setSubmitted] = useState<boolean>();
+  const [chefMapping, setChefMapping] = useState<{ countryOne: string; countryTwo: string; }>();
   const [numMessagesRendered, setNumMessagesRendered] = useState<number>(0);
+  
+  const handleSubmit = async () => {
+    if (selectedCountries.length < 2) {
+      window.alert('Please select at least two chefs!');
+      return;
+    }
+
+    try {
+      const countryOne: string = selectedCountries[0].name;
+      const countryTwo: string = selectedCountries[1].name;
+
+      const CHEF_MAPPING = {
+        countryOne : countryOne, 
+        countryTwo : countryTwo
+      };
+
+      setChefMapping(CHEF_MAPPING);
+      
+      const response = await fetch('http://127.0.0.1:5000/api/create-sim', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json', 
+          'Accept': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
+          'Access-Control-Request-Method': 'GET, POST, DELETE, PUT, OPTIONS',          
+        },
+        //@ts-ignore
+        body: JSON.stringify({ chefs: selectedCountries.map((item) => item.name) })
+      });
+      setSubmitted(true);
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error('Error submitting data:', error);
+    }
+  };
 
   useEffect(() => {
     const fetchNextMessage = async () => {
@@ -47,33 +85,6 @@ export default function Home() {
     //maybe a num processed...
   }, [messages, submitted]);
 
-  const handleSubmit = async () => {
-    if (selectedCountries.length < 2) {
-      window.alert('Please select at least two chefs!');
-      return;
-    }
-
-    try {
-      const response = await fetch('http://127.0.0.1:5000/api/create-sim', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json', 
-          'Accept': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
-          'Access-Control-Request-Method': 'GET, POST, DELETE, PUT, OPTIONS',          
-        },
-        //@ts-ignore
-        body: JSON.stringify({ chefs: selectedCountries.map((item) => item.name) })
-      });
-      setSubmitted(true);
-      const data = await response.json();
-      console.log(data);
-    } catch (error) {
-      console.error('Error submitting data:', error);
-    }
-  };
-
   return (
     <main
       className={`flex min-h-screen flex-col items-center justify-between p-4 ${inter.className}`}
@@ -91,7 +102,7 @@ export default function Home() {
           {submitted && (
             <div>
               <h1 className="text-2xl font-bold mb-1">Chat</h1>
-              <ChatBox messages={messages}/>
+              <ChatBox chefMapping={chefMapping} messages={messages}/>
             </div>
           )}
         </div>
