@@ -22,9 +22,10 @@ def determine_topic_and_names(chef: list[str], custom: str):
     if custom and len(chef) == 1:
         names = {"Custom", f"{chef[0]}"}
         topic = f"Finding a novel dish idea that combines both the CUSTOM culture and {chef[0]} culture"
-    elif not custom and len(chef) == 2:
+    elif len(chef) == 2:
         names = {f"{chef[0]}", f"{chef[1]}"}
-        topic = f"Finding a novel dish idea that combines both the {chef[0]} culture and {chef[1]} culture"
+        suffix = f", with this requirement: {custom}" if custom else ""
+        topic = f"Finding a novel dish idea that combines both the {chef[0]} culture and {chef[1]} culture" + suffix
     else:
         raise ValueError("Invalid input for 'chef' and 'custom'")
     return topic, names
@@ -53,6 +54,8 @@ def generate_system_message(name: str, description: str, conversation_descriptio
     DO take risks and aim to be quirky.
     DO use elements from your own culture as you're reasoning about the recipe.
     DO come up with a name for the dish when you're done.
+
+    If a requirement was given, make sure to incorporate it into the dish.
 
     DO NOT fabricate any dishes.
 
