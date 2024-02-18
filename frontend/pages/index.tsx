@@ -16,16 +16,25 @@ export default function Home() {
 
   useEffect(() => {
     const fetchNextMessage = async () => {
-      if (!submitted) {
+      if (!submitted && messages.length == 0) {
         return;
       }
 
       try {
-        const response = await fetch('http://127.0.0.1:5000/api/sim-step', { method: 'get', mode: 'cors' });
+        const response = await fetch('http://127.0.0.1:5000/api/sim-step', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json', 
+            'Accept': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
+            'Access-Control-Request-Method': 'GET, POST, DELETE, PUT, OPTIONS',          
+          }
+        });
         const data = await response.json();
         setTimeout(() => {
           setMessages(messages => [...messages, data]);
-        }, 5000); // Adjust the timeout as needed for typing effect speed
+        }, 1000); // Adjust the timeout as needed for typing effect speed
       } catch (error) {
         console.error('Error fetching next message:', error);
       }
@@ -36,7 +45,7 @@ export default function Home() {
     }
 
     //maybe a num processed...
-  }, [messages]);
+  }, [messages, submitted]);
 
   const handleSubmit = async () => {
     if (selectedCountries.length < 2) {
