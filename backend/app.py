@@ -28,13 +28,11 @@ end_iteration = 10
 last_message = ""
 @app.route('/api/sim-step', methods=['GET'])
 def sim_step():
-    # global iteration
-    # name, message = simulator.step()
-    # iteration += 1
-    # global last_message
-    # last_message = message
-    name = 'shreyas'
-    message = "hey what's up?"
+    global iteration
+    name, message = simulator.step()
+    iteration += 1
+    global last_message
+    last_message = message
     return jsonify({"is_last": iteration >= end_iteration, "name": name, "text": message}), 200
 
 @app.route('/api/final', methods=['GET'])
