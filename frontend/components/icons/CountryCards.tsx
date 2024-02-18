@@ -6,14 +6,14 @@ function CountryCards() {
   const [selectedCountries, setSelectedCountries] = useState([]);
 
   const countries = [
-    { name: "China", imageSrc: "./china.png" },
-    { name: "Mexican", imageSrc: "./mexican.png" },
-    { name: "France", imageSrc: "./france.png" },
-    { name: "India", imageSrc: "./india.png" },
-    { name: "Japan", imageSrc: "./japan.png" },
-    { name: "Lebanon", imageSrc: "./lebanon.png" },
-    { name: "USA", imageSrc: "./usa.png" },
-    { name: "AddNew", imageSrc: "./addnew.png" },
+    { name: "CHINA", imageSrc: "./china.webp" },
+    { name: "MEXICO", imageSrc: "./mexican.webp" },
+    { name: "ITALY", imageSrc: "./italian.webp" },
+    { name: "INDIA", imageSrc: "./india.webp" },
+    { name: "JAPAN", imageSrc: "./japan.webp" },
+    { name: "LEBANON", imageSrc: "./lebanon.webp" },
+    { name: "USA", imageSrc: "./usa.webp" },
+    { name: "ADD NEW", imageSrc: "./addnew.webp" },
   ];
 
   const galleryStyle: React.CSSProperties = {

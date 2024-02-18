@@ -16,7 +16,7 @@ function Card({
   const [isSelected, setIsSelected] = useState(false);
 
   const cardStyle = {
-    border: isSelected ? "2px solid blue" : "1px solid #ddd",
+    border: isSelected ? "3px solid blue" : "1px solid #ddd",
     borderRadius: "8px",
     cursor: "pointer",
     padding: "10px",
@@ -39,11 +39,11 @@ function Card({
   };
 
   const titleStyle = {
-    color: "#333", // darker color for better readability
-    fontSize: "18px", // slightly larger font size
-    marginTop: "8px", // more space above the title
-    textAlign: "center", // center alignment for better aesthetics
-    fontWeight: "bold", // bold font weight for emphasis
+    marginTop: isSelected ? "20px" : "10px",
+    color: "#333",
+    fontSize: "18px",
+    fontWeight: "bold",
+    textAlign: "center",
   };
 
   const gotSelected = () => {
@@ -65,10 +65,15 @@ function Card({
   };
 
   return (
-    <div>
+    <div className="h-[24rem]">
       <div style={cardStyle} onClick={gotSelected}>
-        <img src={imageSrc} alt={countryName} style={imageStyle} />
-        <h3>{countryName}</h3>
+        <img
+          src={imageSrc}
+          alt={countryName}
+          style={imageStyle}
+          className="flex"
+        />
+        <h3 style={titleStyle}>{countryName}</h3>
       </div>
     </div>
   );
