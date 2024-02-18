@@ -5,7 +5,7 @@ export default function Navbar() {
     <header className="w-full">
       <nav className="flex flex-row justify-between items-center w-full">
         <Link href="/">
-          <h1 className="text-2xl">FoodAgents</h1>
+          <h1 className="text-2xl m-2 p-2">ChefChat</h1>
         </Link>
         <div className="flex flex-row">
           <Link href="/">
@@ -17,5 +17,5 @@ export default function Navbar() {
         </div>
       </nav>
     </header>
-
+  );
 }
