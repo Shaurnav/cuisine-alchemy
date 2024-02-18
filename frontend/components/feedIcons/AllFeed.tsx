@@ -4,57 +4,64 @@ export default function AllFeed() {
   const feedData = [
     {
       username: "joy_ghosh15",
-      title: "Sample Title 1",
-      description: "This is a sample description for the first feed item.",
-      imageUrl: "https://via.placeholder.com/150",
+      title: "Falafel Burger with Tahini Bbq Sauce and Avocado",
+      description:
+        "Falafel Burger with Tahini BBQ Sauce and Avocado Slaw, showcasing the fusion of Middle Eastern and American cuisines",
+      imageUrl: "./falafel.webp",
     },
     {
       username: "adibsood",
-      title: "Sample Title 1",
-      description: "This is a sample description for the second feed item.",
-      imageUrl: "https://via.placeholder.com/150",
+      title: "Borscht-inspired Shakshukha",
+      description:
+        "A unique fusion dish combining Russian borscht with Arabic shakshuka. Beet-infused tomato sauce simmered with bell peppers, onions, and spices, topped with poached eggs. Served with a dollop of labneh and a sprinkle of fresh dill",
+      imageUrl: "./borscht.webp",
     },
     {
       username: "sharmaTheParma",
-      title: "Sample Title 1",
+      title: "Churro Eclair with White Chocolate Ganache",
       description: "This is a sample description for the first feed item.",
-      imageUrl: "https://via.placeholder.com/150",
+      imageUrl: "churro.webp",
     },
     {
       username: "Xiao215",
-      title: "Sample Title 1",
-      description: "This is a sample description for the first feed item.",
-      imageUrl: "https://via.placeholder.com/150",
+      title: "Matcha Pineapple Coconut Panna Cotta",
+      description:
+        "A fusion dessert blending Japanese matcha with Sri Lankan pineapple and coconut. Creamy matcha-infused coconut milk panna cotta topped with fresh pineapple compote.",
+      imageUrl: "matcha.webp",
     },
     {
       username: "nBanga",
-      title: "Sample Title 1",
+      title: "Moroccan Paella with Harissa Aioli",
       description: "This is a sample description for the first feed item.",
-      imageUrl: "https://via.placeholder.com/150",
+      imageUrl: "moroccan.webp",
     },
     {
       username: "wallace_browning",
-      title: "Sample Title 1",
-      description: "This is a sample description for the first feed item.",
-      imageUrl: "https://via.placeholder.com/150",
+      title: "Matcha Tres Leches Cake with Dragon Fruit Compote",
+      description:
+        "A decadent blend of Mexican tres leches cake infused with Japanese matcha powder.",
+      imageUrl: "matccha.webp",
     },
     {
       username: "shrishJ",
-      title: "Sample Title 1",
-      description: "This is a sample description for the first feed item.",
-      imageUrl: "https://via.placeholder.com/150",
+      title: "Thai-Med Bruschetta",
+      description:
+        "Toasted baguette slices topped with a fusion of hummus, mango salsa, and Thai basil.",
+      imageUrl: "Thai-Med.webp",
     },
     {
       username: "srinidhii.v",
-      title: "Sample Title 1",
-      description: "This is a sample description for the first feed item.",
-      imageUrl: "https://via.placeholder.com/150",
+      title: "Masala Dosa Calzone",
+      description:
+        "A creative fusion dish blending the iconic South Indian dosa with the comforting flavors of Italian calzone",
+      imageUrl: "masala.webp",
     },
     {
       username: "aliyanChaCha",
-      title: "Sample Title 1",
-      description: "This is a sample description for the first feed item.",
-      imageUrl: "https://via.placeholder.com/150",
+      title: "Sushi Samosa",
+      description:
+        "Combining the elegance of Japanese sushi with the beloved Indian samosa",
+      imageUrl: "sushi.webp",
     },
   ];
 
@@ -86,20 +93,4 @@ export default function AllFeed() {
       ))}
     </div>
   );
-  // return (
-  //   <div>
-  //     {feedData.map((item, index) => (
-  //       //@ts-ignore
-  //       <div>
-  //         <FeedIcon
-  //         username={item.username}
-  //         title={item.title}
-  //         description={item.description}
-  //         imageUrl={item.imageUrl}
-  //         key={index}
-  //       />
-  //         </div>
-  //     ))}
-  //   </div>
-  // );
 }

@@ -14,12 +14,13 @@ export default function FeedIcon({
   return (
     <div
       style={{
-        width: "425px",
+        width: "480px",
         margin: "20px",
         boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2)",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
+        borderRadius: "10px",
       }}
     >
       <h2>{title}</h2>
