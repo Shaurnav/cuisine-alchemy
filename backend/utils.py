@@ -35,7 +35,7 @@ def generate_conversation_description(topic: str, names: set):
 
 
 def generate_agent_description(name: str, custom: str, conversation_description: str, word_limit=50):
-    additional_content = f", this is how they describe Custom Chef's culture: \"{custom}\"." if name == "Custom Chef" else ""
+    additional_content = f", this is how they describe Custom Chef's culture: \"{custom}\"." if name == "Custom" else ""
     agent_specifier_prompt = SystemMessage(
         content=f"{conversation_description}\nPlease reply with a creative description of {name}{additional_content}, in {word_limit} words or less.")
     human_message = HumanMessage(
@@ -54,10 +54,13 @@ def generate_system_message(name: str, description: str, conversation_descriptio
     DO use elements from your own culture as you're reasoning about the recipe.
     DO come up with a name for the dish when you're done.
 
+    DO think about coming up with combinations that haven't been seen before.
+    DO make well-reasoned arguments and hypothesis of what different ingredient combinations from different cultures would taste like when used together
+
+    DO NOT be overly verbose: use cooking-specific terminology, but keep the tone casual and succinct.
+    
     DO NOT fabricate any dishes.
-
-    Do not add anything else.
-
+    Do NOT add anything else.
     Stop speaking the moment you finish speaking from your perspective.
     """
 

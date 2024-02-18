@@ -33,8 +33,6 @@ def sim_step():
     iteration += 1
     global last_message
     last_message = message
-    # name = 'shreyas'
-    # message = "hey what's up?"
     return jsonify({"is_last": iteration >= end_iteration, "name": name, "text": message}), 200
 
 @app.route('/api/final', methods=['GET'])

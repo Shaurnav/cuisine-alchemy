@@ -10,13 +10,14 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const [selectedCountries, setSelectedCountries] = useState<any[]>([]);
-  // const [hasCountry, setHasCountry] = useState<boolean>(false);
   const [messages, setMessages] = useState<MessageProps[]>([]);
   const [submitted, setSubmitted] = useState<boolean>();
   const [chefMapping, setChefMapping] = useState<{
     countryOne: string;
     countryTwo: string;
   }>();
+  const [input, setInputText] = useState<string>('');
+  const [final, setFinal] = useState<boolean>();
   const [numMessagesRendered, setNumMessagesRendered] = useState<number>(0);
 
   const handleSubmit = async () => {
@@ -26,6 +27,8 @@ export default function Home() {
     }
 
     try {
+      console.log(input);
+      
       const countryOne: string = selectedCountries[0].name;
       const countryTwo: string = selectedCountries[1].name;
 
@@ -49,6 +52,7 @@ export default function Home() {
         //@ts-ignore
         body: JSON.stringify({
           chefs: selectedCountries.map((item) => item.name),
+          custom: input, 
         }),
       });
       setSubmitted(true);
@@ -80,7 +84,9 @@ export default function Home() {
         const data = await response.json();
         setTimeout(() => {
           setMessages((messages) => [...messages, data]);
-        }, 1000); // Adjust the timeout as needed for typing effect speed
+        }, 1000); 
+
+        setFinal(data.is_last);
       } catch (error) {
         console.error("Error fetching next message:", error);
       }
@@ -93,9 +99,7 @@ export default function Home() {
     //maybe a num processed...
   }, [messages, submitted]);
 
-  const hasCountry = selectedCountries.some((item) => item.name === "ADD NEW");
-  // const temp = selectedCountries.some((item) => item.name === "ADD NEW");
-  // setHasCountry(temp);
+  const hasCountry = selectedCountries.some((item) => item.name === "ADD YOUR OWN");
 
   return (
     <main
@@ -109,6 +113,8 @@ export default function Home() {
             setSelectedCountries={setSelectedCountries}
           />
           <input
+            className="m-4 h-10 w-1/2 text-xl self-center"
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => setInputText(event.target.value)}
             placeholder={
               hasCountry
                 ? "Please describe your custom chef"
