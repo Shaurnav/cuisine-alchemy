@@ -192,7 +192,7 @@ export default function Home() {
                   </p>
                   <br/>
                   <h1 className="text-2xl">
-                    Here's the "recipe"
+                    Here's the recipe
                   </h1>
                   <p>
                     {finalData?.recipe}
