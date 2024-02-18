@@ -4,17 +4,43 @@ import Navbar from "@/components/navbar";
 import ChatBox from "@/components/chatbox";
 import { MessageProps } from "@/interfaces/message";
 import CountryCards from "@/components/icons/CountryCards";
+import { useEffect, useState } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
 const messages: MessageProps[] = [
-  { text: "Hi, how can I help you?", sender: "bot" },
-  { text: "I'm looking for some information.", sender: "user" },
-  { text: "Sure, what do you need to know?", sender: "bot" },
+  { text: "Hi, how can I help you?", name: "bot" },
+  { text: "I'm looking for some information.", name: "user" },
+  { text: "Sure, what do you need to know?", name: "bot" },
   // Add more messages as needed
 ];
 
+
+
 export default function Home() {
+  const [messages, setMessages] = useState<MessageProps[]>([]);
+  const [numMessagesRendered, setNumMessagesRendered] = useState<number>(0);
+
+  useEffect(() => {
+    const fetchNextMessage = async () => {
+      try {
+        const response = await fetch('http://127.0.0.1:5000/api/sim-step');
+        const data = await response.json();
+        setTimeout(() => {
+          setMessages(prevMessages => [...prevMessages, data]);
+        }, 1000); // Adjust the timeout as needed for typing effect speed
+      } catch (error) {
+        console.error('Error fetching next message:', error);
+      }
+    }
+
+    if (messages.length < 8) {
+      fetchNextMessage();
+    }
+
+    //maybe a num processed...
+  }, [messages]);
+
   return (
     <main
       className={`flex min-h-screen flex-col items-center justify-between p-4 ${inter.className}`}
